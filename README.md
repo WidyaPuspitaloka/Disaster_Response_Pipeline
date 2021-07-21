@@ -1,6 +1,8 @@
 # Disaster Response Pipeline Project
 
-This repository contains a web app, ETL as well as ML pipeline from a dataset provided by FigureEight regarding disaster response message.
+This repository contains a web app, ETL as well as ML pipeline from a dataset provided by FigureEight regarding disaster response message. This data is analyzed to build an ML model that classifies disaster-related messages.
+
+This app can be used by emergency operators and help them during a disaster to input a new message and get classification results in several categories and send the messages to an appropriate disaster relief agency.
 
 ### Data Processing:
 1. Clean the data and do the Extract, Transform, and Load process (ETL) so that the data can be utilized for Machine Learning pipeline. See the detail code on the `ETL_Pipeline.ipynb`
@@ -22,9 +24,22 @@ This repository contains a web app, ETL as well as ML pipeline from a dataset pr
 3. Go to http://0.0.0.0:3001/
 
 ### File Description:
-1. The `data` folder contains the dataset, database and ETL pipeline.
-2. The `models` folder contains the ML pipeline and classifier model
-3. The `app` folder contains web application
+1. app
+| - template
+| |- master.html # main page of web app
+| |- go.html # classification result page of web app
+|- run.py # Flask file that runs app
+2. data
+|- disaster_categories.csv # data to process
+|- disaster_messages.csv # data to process
+|- process_data.py #python script for the ETL pipeline
+|- DisasterResponse.db # database to save clean data to
+|- ETL_Pipeline.ipynb # ETL pipeline code on Jupyter notebook
+3. models
+|- train_classifier.py # python script for the ML pipeline
+|- classifier.pkl # saved model (not included in this repo)
+|- ML_Pipeline.ipynb # ML pipeline code on Jupyter notebook
+4. README.md
 
 ### Remarks:
 The trained model is not inlcuded in this repo due to the large file size.
