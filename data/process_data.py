@@ -21,16 +21,6 @@ def load_data(messages_filepath, categories_filepath):
 
     return df
 
-#def convert_category(categories):
-#    for column in categories:
-        # set each value to be the last character of the string
-#        categories[column] = categories[column].transform(lambda x: x[-1:])
-
-        # convert column from string to numeric
- #       categories[column] = pd.to_numeric(categories[column])
-
-  #  return categories
-
 def clean_data(df):
     '''
     Function to transform categories, clean data,
@@ -62,10 +52,8 @@ def clean_data(df):
     categories['related'] = categories['related'].apply(lambda value: value%2)
 
     # 5 Replace `categories` column in `df` with new category columns.
+    # dropping categories and original columns (the latter has a lot of nan values)
     df_clean  = df.drop(['categories', 'original'] ,axis = 1)
-
-    #remove original column with all 0 value
-    #df_clean  = df_clean.drop(['original'], axis = 1, inplace = True)
 
     # concatenate the original dataframe with the new `categories` dataframe
     df_clean = pd.concat([df_clean, categories], axis = 1)
@@ -82,7 +70,7 @@ def save_data(df, database_filename):
     Output: database_filename (str)
     '''
     engine = create_engine('sqlite:///{}'.format(database_filename))
-    df.to_sql('messages', engine, index=False)
+    df.to_sql('messages', engine, index=False, if_exists='replace')
 
 
 def main():
