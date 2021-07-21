@@ -26,8 +26,8 @@ This app can be used by emergency operators and help them during a disaster to i
 ### File Description:
 1. app
 - template
--- master.html # main page of web app
--- go.html # classification result page of web app
+    - master.html # main page of web app
+    - go.html # classification result page of web app
 - run.py # Flask file that runs app
 2. data
 - disaster_categories.csv # data to process
