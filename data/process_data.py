@@ -15,11 +15,21 @@ def load_data(messages_filepath, categories_filepath):
 
     Output: merged dataframe of message and categories
     '''
-    messages = pd.read_csv('disaster_messages.csv')
-    categories = pd.read_csv('disaster_categories.csv')
+    messages = pd.read_csv(messages_filepath)
+    categories = pd.read_csv(categories_filepath)
     df = messages.merge(categories, on = 'id')
 
     return df
+
+#def convert_category(categories):
+#    for column in categories:
+        # set each value to be the last character of the string
+#        categories[column] = categories[column].transform(lambda x: x[-1:])
+
+        # convert column from string to numeric
+ #       categories[column] = pd.to_numeric(categories[column])
+
+  #  return categories
 
 def clean_data(df):
     '''
@@ -40,26 +50,28 @@ def clean_data(df):
     category_colnames = row.str.split('-').apply(lambda x:x[0]).to_list()
     categories.columns = category_colnames
 
-     # 3 convert category values to just numbers 0 or 1. -> use convert category function
-     for column in categories:
+     # 3 convert category values to  numbers 0 or 1
+    for column in categories:
         # set each value to be the last character of the string
         categories[column] = categories[column].transform(lambda x: x[-1:])
 
         # convert column from string to numeric
         categories[column] = pd.to_numeric(categories[column])
-
+    #categories = categories.applymap(lambda value: int(value[-1]))
     # 4 modify value of 'related' column to 0 and 1 only, since it has value 2
-    df['related'] = df['related'].apply(lambda x: x%2)
+    categories['related'] = categories['related'].apply(lambda value: value%2)
 
     # 5 Replace `categories` column in `df` with new category columns.
-    df_clean  = df.drop('categories' ,axis = 1, inplace=True)
+    df_clean  = df.drop(['categories', 'original'] ,axis = 1)
+
+    #remove original column with all 0 value
+    #df_clean  = df_clean.drop(['original'], axis = 1, inplace = True)
 
     # concatenate the original dataframe with the new `categories` dataframe
-    df_clean = pd.concat([df, categories], axis = 1)
+    df_clean = pd.concat([df_clean, categories], axis = 1)
 
-    # 6 Remove duplicates and original column with all 0 values
-    df_clean  = df.drop(['original'], axis = 1, inplace = True)
-    df_clean  = df.drop_duplicates()
+    # 6 Remove duplicates
+    df_clean  = df_clean.drop_duplicates()
 
     return df_clean
 
@@ -69,8 +81,8 @@ def save_data(df, database_filename):
     Input: df (Pandas DataFrame)
     Output: database_filename (str)
     '''
-    engine = create_engine('sqlite:///database_filename.db')
-    df.to_sql('messages', engine, index=False, if_exists='replace')
+    engine = create_engine('sqlite:///{}'.format(database_filename))
+    df.to_sql('messages', engine, index=False)
 
 
 def main():

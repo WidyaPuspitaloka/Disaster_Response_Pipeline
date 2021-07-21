@@ -31,5 +31,5 @@ The trained model is not inlcuded in this repo due to the large file size.
 
 ### Acknowledgements:
 - FigureEight that genereously providing the data.
-- Udacity for the lessons, for providing the templates for this project, and for the answers in Knowledge (especially regarding the NaN value of the data, inconsistencies of the' 'related' column that has a value of 2, and 'child_alone' column who only has the value of 0) that helps me to clean the data. Udacity Knowledge  also provides the answer about the new HTML template and gives an idea for the additional plot.
-- Various ideas and input from Stack Overflow.
+- Udacity for the lessons, for providing the templates for this project, and for the answers in Knowledge (especially regarding the NaN value of the data, inconsistencies of the' 'related' column that has a value of 2) that helps me to clean the data. Udacity Knowledge  also provides the answer about the new HTML template and gives an idea for the additional plot.
+- Various ideas and input from StackOverflow.

@@ -5,6 +5,9 @@ import numpy as np
 import sqlite3
 from sqlalchemy import create_engine
 
+import pickle
+import joblib
+
 
 # download necessary NLTK data
 import nltk
@@ -34,13 +37,16 @@ def load_data(database_filepath):
     Y = labels of categories dataset
 '   '''
 
-    engine = create_engine('sqlite:///{}'.format(database_filepath))
-    df = pd.read_sql("SELECT * FROM messages", engine)
+    #engine = create_engine('sqlite:///DisasterResponse.db')
+    #df = pd.read_sql("SELECT * FROM messages", engine)
+    #file_path = '../data/DisasterResponse.db'
+    conn = sqlite3.connect(database_filepath)
+    df = pd.read_sql('SELECT * FROM messages', conn)
 
     # create X and  Y dataframe
     X = df['message']
     Y = df[df.columns[3:]]
-    category_names = Y.column.values
+    category_names = Y.columns.values
 
     return X,Y, category_names
 
@@ -141,10 +147,9 @@ def build_model():
 
     #specifity the parameter for grid search
     parameters = {
-    'features__text_pipeline__tfidf__use_idf':(True, False),
-    'clf__estimator__n_estimators': [10, 50, 100],
-    'clf__estimator__min_samples_split': [2, 4],
-    #'clf__estimator__learning_rate': [0.1, 0.3]
+    #'features__text_pipeline__tfidf__use_idf':(True, False),
+    #'clf__estimator__n_estimators': [10,50],
+    'clf__estimator__min_samples_split': [2, 4]
         }
 
     # create grid search object
@@ -163,14 +168,14 @@ def evaluate_model(model, X_test, Y_test, category_names):
     -category_names - a list of category names
     Output: classification report
     '''
-    Y_pred_test = pipeline_model.predict(X_test)
-    Y_pred_train = pipeline_model.predict(X_train)
+    Y_pred_test = model.predict(X_test)
+    #Y_pred_train = model.predict(X_train)
 
     #classification report on the test data
-    print(classification_report(Y_test.values, Y_pred_test, target_names=Y.columns.values))
+    print(classification_report(Y_test.values, Y_pred_test, target_names=category_names))
     print('--------------------------------------------------------------------')
     #classification report on the train data
-    print(classification_report(Y_train.values, Y_pred_train, target_names=Y.columns.values))
+    #print(classification_report(Y_train.values, Y_pred_train, target_names=category_names))
 
 def save_model(model, model_filepath):
     '''
