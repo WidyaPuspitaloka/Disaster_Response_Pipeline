@@ -25,20 +25,20 @@ This app can be used by emergency operators and help them during a disaster to i
 
 ### File Description:
 1. app
-| - template
-| |- master.html # main page of web app
-| |- go.html # classification result page of web app
-|- run.py # Flask file that runs app
+- template
+-- master.html # main page of web app
+-- go.html # classification result page of web app
+- run.py # Flask file that runs app
 2. data
-|- disaster_categories.csv # data to process
-|- disaster_messages.csv # data to process
-|- process_data.py #python script for the ETL pipeline
-|- DisasterResponse.db # database to save clean data to
-|- ETL_Pipeline.ipynb # ETL pipeline code on Jupyter notebook
+- disaster_categories.csv # data to process
+- disaster_messages.csv # data to process
+- process_data.py #python script for the ETL pipeline
+- DisasterResponse.db # database to save clean data to
+- ETL_Pipeline.ipynb # ETL pipeline code on Jupyter notebook
 3. models
-|- train_classifier.py # python script for the ML pipeline
-|- classifier.pkl # saved model (not included in this repo)
-|- ML_Pipeline.ipynb # ML pipeline code on Jupyter notebook
+- train_classifier.py # python script for the ML pipeline
+- classifier.pkl # saved model (not included in this repo)
+- ML_Pipeline.ipynb # ML pipeline code on Jupyter notebook
 4. README.md
 
 ### Remarks:
